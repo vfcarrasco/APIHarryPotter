@@ -1,0 +1,517 @@
+{
+	"info": {
+		"_postman_id": "93971b72-8cfa-4e7c-995f-89a81a4ba4a5",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "9233660",
+		"_collection_link": "https://gold-equinox-706002.postman.co/workspace/API-Harry-Potter~4ea08ff0-7730-408c-88fb-c9a317e437e9/collection/9233660-93971b72-8cfa-4e7c-995f-89a81a4ba4a5?action=share&source=collection_link&creator=9233660"
+	},
+	"item": [
+		{
+			"name": "exercício_01",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar contrato house\", function(){\r",
+							"    pm.expect(tv4.validate(pm.response.json(), pm.globals.get('schemaValidarFormatoHouse'))).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.unset(\"schemaValidarFormatoHouse\");\r",
+							"\r",
+							"pm.globals.set(\"schemaValidarFormatoHouse\", JSON.stringify({\r",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"      \"house\": {\r",
+							"        \"type\": \"string\"\r",
+							"      },\r",
+							"      \"emoji\": {\r",
+							"        \"type\": \"string\"\r",
+							"      },\r",
+							"      \"founder\": {\r",
+							"        \"type\": \"string\"\r",
+							"      },\r",
+							"      \"colors\": {\r",
+							"        \"type\": \"array\",\r",
+							"        \"items\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"minItems\": 2,\r",
+							"        \"maxItems\": 2\r",
+							"      },\r",
+							"      \"animal\": {\r",
+							"        \"type\": \"string\"\r",
+							"      },\r",
+							"      \"index\": {\r",
+							"        \"type\": \"integer\"\r",
+							"      }\r",
+							"    },\r",
+							"    \"required\": [\r",
+							"      \"house\",\r",
+							"      \"emoji\",\r",
+							"      \"founder\",\r",
+							"      \"colors\",\r",
+							"      \"animal\",\r",
+							"      \"index\"\r",
+							"    ]\r",
+							"  }\r",
+							"}));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"house\": \"Grifinória\",\r\n    \"emoji\": \"🦁\",\r\n    \"founder\": \"Godric Grifinória\",\r\n    \"colors\": [\r\n      \"red\",\r\n      \"gold\"\r\n    ],\r\n    \"animal\": \"Leão\",\r\n    \"index\": 0\r\n  },\r\n  {\r\n    \"house\": \"Lufa-lufa\",\r\n    \"emoji\": \"🦡\",\r\n    \"founder\": \"Helga Lufa-Lufa\",\r\n    \"colors\": [\r\n      \"yellow\",\r\n      \"black\"\r\n    ],\r\n    \"animal\": \"Texugo\",\r\n    \"index\": 1\r\n  },\r\n  {\r\n    \"house\": \"Corvinal\",\r\n    \"emoji\": \"🦅\",\r\n    \"founder\": \"Rowena Corvinal\",\r\n    \"colors\": [\r\n      \"blue\",\r\n      \"yellow\"\r\n    ],\r\n    \"animal\": \"Raven\",\r\n    \"index\": 2\r\n  },\r\n  {\r\n    \"house\": \"Sonserina\",\r\n    \"emoji\": \"🐍\",\r\n    \"founder\": \"Salazar Sonserina\",\r\n    \"colors\": [\r\n      \"green\",\r\n      \"silver\"\r\n    ],\r\n    \"animal\": \"Cobra\",\r\n    \"index\": 3\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/pt/houses"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_02",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Valdiar retorno de URL invalida, response code 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar mensagem de URL inválida\", function() {\r",
+							"    pm.expect(pm.response.json().error).to.be.eql(\"Invalid language\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/jp"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_03",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.unset(\"schemaValidarFormatoSpells\");\r",
+							"\r",
+							"pm.globals.set(\"schemaValidarFormatoSpells\", JSON.stringify({\r",
+							"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"    \"type\": \"array\",\r",
+							"    \"items\": {\r",
+							"        \"type\": \"object\",\r",
+							"        \"properties\": {\r",
+							"            \"spell\": {\r",
+							"                \"type\": \"string\"\r",
+							"            },\r",
+							"            \"type\": {\r",
+							"                \"type\": \"string\"\r",
+							"            },\r",
+							"            \"effect\": {\r",
+							"                \"type\": \"string\"\r",
+							"            }\r",
+							"        },\r",
+							"        \"required\": [\r",
+							"            \"spell\",\r",
+							"            \"type\",\r",
+							"            \"effect\"\r",
+							"        ]\r",
+							"    }\r",
+							"}));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar contrato spells\", function(){\r",
+							"    pm.expect(tv4.validate(pm.response.json(), pm.globals.get('schemaValidarFormatoHouse'))).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/pt/spells"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_04",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// O retorno do feitiço Accio está sendo exibido no console\r",
+							"pm.test(\"Deve retornar o feitiço 'Accio' com as propriedades corretas\", function () {\r",
+							"    const spells = pm.response.json();\r",
+							"    const accio = spells.find(spell => spell.spell === 'Accio');\r",
+							"\r",
+							"    console.log(\"\\nTestando feitiço 'Accio'...\");\r",
+							"    if (accio) {\r",
+							"        const isValid =\r",
+							"            accio.spell === 'Accio' &&\r",
+							"            accio.use === 'Feitiço de invocação' &&\r",
+							"            accio.index === 0;\r",
+							"\r",
+							"        if (isValid) {\r",
+							"            console.log(\"✓ Feitiço 'Accio' está correto:\", accio);\r",
+							"        } else {\r",
+							"            console.error(\"✗ Feitiço 'Accio' não está correto:\", accio);\r",
+							"        }\r",
+							"    } else {\r",
+							"        console.error(\"✗ Feitiço 'Accio' não encontrado.\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/pt/spells"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_05",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"URL contem o en identificando que a API esta em inglês\", function () {\r",
+							"    const url = pm.request.url.toString();\r",
+							"    pm.expect(url).to.include(\"/en\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar a mensagem em inglês\", function() {\r",
+							"    pm.expect(pm.response.json().message).to.be.eql(\"This is the endpoint of the English language\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/en"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_06_Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/pt/books"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_06_Characters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/pt/characters"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_06_Houses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/pt/houses"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_06_Spells",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/pt/spells"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_07",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"A casa Grifinória deve existir\", function () {\r",
+							"    const houses = pm.response.json();\r",
+							"    const grifinoria = houses.find(house => house.house === \"Grifinória\");\r",
+							"    pm.expect(grifinoria).to.not.be.undefined; \r",
+							"});\r",
+							"\r",
+							"pm.test(\"A casa Grifinória deve ter as propriedades corretas\", function () {\r",
+							"    const houses = pm.response.json();\r",
+							"    const grifinoria = houses.find(house => house.house === \"Grifinória\");\r",
+							"\r",
+							"    pm.expect(grifinoria).to.have.property('house', 'Grifinória');\r",
+							"    pm.expect(grifinoria).to.have.property('emoji', '🦁');\r",
+							"    pm.expect(grifinoria).to.have.property('founder', 'Godric Grifinória');\r",
+							"    pm.expect(grifinoria.colors).to.include.members(['red', 'gold']);\r",
+							"    pm.expect(grifinoria).to.have.property('animal', 'Leão');\r",
+							"    pm.expect(grifinoria).to.have.property('index', 0);\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/pt/houses"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_08",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Character at position 0 is Harry Potter\", function () {\r",
+							"    pm.expect(response[0]).to.have.property(\"fullName\", \"Harry James Potter\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Actor for character at position 0 is correct\", function () {\r",
+							"    pm.expect(response[0]).to.have.property(\"interpretedBy\", \"Daniel Radcliffe\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array and not empty\", function () {\r",
+							"    pm.expect(response).to.be.an(\"array\").and.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/pt/characters"
+			},
+			"response": []
+		},
+		{
+			"name": "exercício_09",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorno de response code de sucesso\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('validação do campo \"index\" nos personagens', function () {\r",
+							"    var characters = pm.response.json();\r",
+							"    characters.forEach((character, index) => {\r",
+							"    pm.expect(character.index).to.equal(index);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/pt/characters"
+			},
+			"response": []
+		}
+	]
+}
