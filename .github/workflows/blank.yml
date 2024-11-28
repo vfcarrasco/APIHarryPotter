@@ -1,16 +1,19 @@
 name: Newman Run
+
 on:
-push:
-branches:
-- main
+  push:
+  branches:
+    - main
 jobs:
-newman:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v3
-- name: Create dir
-run: |
+  newman:
+  runs-on: ubuntu-latest
+  steps:
+  - uses: actions/checkout@v3
+
+- name: Create dir for report
+  run: |
 mkdir testArtifacts
+
 #Config environement
 - name: Install Node
 uses: actions/setup-node@v3.4.1
