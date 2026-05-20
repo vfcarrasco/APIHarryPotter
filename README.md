@@ -39,3 +39,4 @@ Se você optou por rodar os teste com o report htmlextra, você gerou um arquivo
 
 ## Entre em contato
 email: vitorcarrasco@gmail.com
+Linkdln:https://www.linkedin.com/in/vitor-felipe-carrasco-7b047b31/
